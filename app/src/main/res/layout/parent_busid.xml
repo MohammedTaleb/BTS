@@ -51,6 +51,7 @@
             android:layout_centerHorizontal="true"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
+            android:onClick="start"
             />
 </RelativeLayout>
 <RelativeLayout

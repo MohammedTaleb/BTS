@@ -15,14 +15,26 @@ import java.util.ArrayList;
  */
 
 public class Data {
-	ArrayList<String> child;
+
+	static ArrayList<String> child=new ArrayList<>();
+	static ArrayList<String> id=new ArrayList<>();
+	static ArrayList<String> name=new ArrayList<>();
+	static ArrayList<String> businfo=new ArrayList<>();
 	FirebaseDatabase Firedatabase;
 	DatabaseReference myRef;
+	String lng,latt,location;
 
 
-	public void fillChild(final String key){
+	public ArrayList<String> fillChild(final String key){
+
 		child=new ArrayList<>();
-		final String [] names={"Child Name : ","ID     : "};
+		id=new ArrayList<>();
+		name=new ArrayList<>();
+		if (!(Data.child.isEmpty()))Data.child.clear();
+		if (!(Data.id.isEmpty()))Data.id.clear();
+		if (!(Data.name.isEmpty()))Data.name.clear();
+
+		final String [] names={"Child Name : ","    ID     : "};
 
 
 		Firedatabase = FirebaseDatabase.getInstance();
@@ -34,7 +46,8 @@ public class Data {
 					if (dataSnapshot.child("Parent").child(key).child("ID")
 							.hasChildren()) {
 						for (DataSnapshot postSnapshot: dataSnapshot.child("Parent").child(key).child("ID").getChildren()){
-							child.add(names[0]+(String) postSnapshot.getKey()+names[1]+(String) postSnapshot.getValue());
+							child.add(names[0]+postSnapshot.getKey()+"  |  "+names[1]+ postSnapshot.getValue());
+							id.add( postSnapshot.getValue().toString());
 						}
 					}
 
@@ -49,5 +62,40 @@ public class Data {
 
 			}
 		});
+		return child;
 	}
+	public ArrayList<String> driverInfo(final String bid){
+
+
+		if (!(Data.businfo.isEmpty()))Data.businfo.clear();
+
+		Firedatabase = FirebaseDatabase.getInstance();
+
+		myRef = Firedatabase.getReference();
+		myRef.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+
+					for(DataSnapshot snap: dataSnapshot.child("Bus").child(bid).getChildren()){
+						if (snap.getKey().equals("latt"))
+							continue;
+						else if(snap.getKey().equals("long")) continue;
+						else
+						businfo.add(snap.getKey()+"     :   "+snap.getValue());
+
+					}
+
+
+
+			}
+
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+
+			}
+		});
+
+		return businfo;
+	}
+
 }

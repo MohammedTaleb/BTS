@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,13 +25,15 @@ public class Access extends AppCompatActivity {
 	DatabaseReference myRef;
 	SharedPreferences pref ;
 	String keyAccess;
+	Data d;
+	ProgressBar pb;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_access);
 
 		pref=this.getSharedPreferences("com.example.ma.bts", Context.MODE_PRIVATE);
-
+		pb= (ProgressBar) findViewById(R.id.pb);
 		login= (Button) findViewById(R.id.login);
 		access= (EditText) findViewById(R.id.access);
 
@@ -39,6 +42,7 @@ public class Access extends AppCompatActivity {
 	}
 	public void getAccess(View v){
 		keyAccess=access.getText().toString();
+		pb.setVisibility(View.VISIBLE);
 		userChecking ();
 
 	}
@@ -47,7 +51,7 @@ public class Access extends AppCompatActivity {
 		Firedatabase = FirebaseDatabase.getInstance();
 
 		myRef = Firedatabase.getReference();
-		myRef.addValueEventListener(new ValueEventListener() {
+		myRef.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -66,6 +70,7 @@ public class Access extends AppCompatActivity {
 					startActivity(intent);
 					finish();
 					Toast.makeText(Access.this, "Welcome Mr." + name, Toast.LENGTH_LONG).show();
+					pb.setVisibility(View.INVISIBLE);
 				} else {
 
 					if ((!(keyAccess.isEmpty())) && dataSnapshot.child("Parent").child(keyAccess).exists()) {
@@ -80,18 +85,22 @@ public class Access extends AppCompatActivity {
 
 						pref.edit().putString("type", "parent").apply();
 
-						Data data=new Data();
-						data.fillChild(keyAccess);
-
+						d=new Data();
+						//d.fillChild(keyAccess);
+//						if (!(Data.child.isEmpty()))Data.child.clear();
+//						if (!(Data.id.isEmpty()))Data.id.clear();
+//						if (!(Data.name.isEmpty()))Data.name.clear();
 						Intent intent1 = new Intent(Access.this, ChildBusId.class);
 						startActivity(intent1);
 						finish();
 						Toast.makeText(Access.this, "Welcome Mr." + name, Toast.LENGTH_LONG).show();
+						pb.setVisibility(View.INVISIBLE);
 						return;
 					} else {
 						Log.i("NotFoundUser", "no");
 						Toast.makeText(Access.this, "Please contact the school to get/check your Access Key"
 								, Toast.LENGTH_LONG).show();
+						pb.setVisibility(View.INVISIBLE);
 					}
 
 				}
