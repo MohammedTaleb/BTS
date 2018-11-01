@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">BTS</string>
+
+    <string name="new_message_notification_title_template">New message: %1$s</string>
+
+    <!-- TODO: remove this placeholder text -->
+    <string name="new_message_notification_placeholder_text_template">its about %1$s  , be Ready .
+    </string>
+
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.ma.bts;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +23,8 @@ public class Data {
 	static ArrayList<String> businfo=new ArrayList<>();
 	FirebaseDatabase Firedatabase;
 	DatabaseReference myRef;
-	String lng,latt,location;
+	static String lng,latt,location;
+
 
 
 	public ArrayList<String> fillChild(final String key){
@@ -53,7 +55,12 @@ public class Data {
 
 				}
 				else {child.add("Please contact your school to check your Data");}
-
+				if (dataSnapshot.child("Parent").child(key).child("latt").exists()){
+					latt=dataSnapshot.child("Parent").child(key).child("latt").getValue().toString();
+				}
+				if (dataSnapshot.child("Parent").child(key).child("long").exists()){
+					lng=dataSnapshot.child("Parent").child(key).child("long").getValue().toString();
+				}
 
 			}
 
@@ -77,9 +84,10 @@ public class Data {
 			public void onDataChange(DataSnapshot dataSnapshot) {
 
 					for(DataSnapshot snap: dataSnapshot.child("Bus").child(bid).getChildren()){
-						if (snap.getKey().equals("latt"))
-							continue;
-						else if(snap.getKey().equals("long")) continue;
+						if (snap.getKey().equals("latt")){
+							continue;}
+						else if(snap.getKey().equals("long")){
+							continue;}
 						else
 						businfo.add(snap.getKey()+"     :   "+snap.getValue());
 

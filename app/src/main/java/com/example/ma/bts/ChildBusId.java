@@ -41,6 +41,9 @@ public class ChildBusId extends AppCompatActivity {
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 				sp.edit().putInt("index", Integer.parseInt(Data.id.get(i))).apply();
 				//data.driverInfo(Data.id.get(sp.getInt("index",0)));
+//				Intent svb=new Intent(getApplicationContext(), ServiceNotification.class);
+//				svb.putExtra("id",Data.id.get(i));
+//				startService(svb);
 				Intent intent=new Intent(getApplicationContext(),TrackDriverInfo.class);
 				startActivity(intent);
 				finish();
@@ -60,6 +63,9 @@ public class ChildBusId extends AppCompatActivity {
 
 		sp.edit().putInt("index",Integer.valueOf(String.valueOf(busID.getText()))).apply();
 		//data.driverInfo(String.valueOf(sp.getInt("index",0)));
+//		Intent svb=new Intent(getApplicationContext(), ServiceNotification.class);
+//		svb.putExtra("id",String.valueOf(sp.getInt("index",1)));
+//		startService(svb);
 		Intent intent=new Intent(getApplicationContext(),TrackDriverInfo.class);
 		startActivity(intent);
 		finish();
