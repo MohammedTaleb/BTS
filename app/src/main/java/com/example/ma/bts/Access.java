@@ -114,7 +114,7 @@ public class Access extends AppCompatActivity {
 						pref.edit().putString("type", "parent").apply();
 
 						Data data = new Data();
-						data.fillChild(keyAccess);
+						//data.fillChild(keyAccess);
 
 						Intent intent1 = new Intent(Access.this, Parent.class);
 						startActivity(intent1);
