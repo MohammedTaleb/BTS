@@ -1,76 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/map"
-        android:alpha="0.5"
-        />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:background="@drawable/gradient"
+        android:padding="10dp"
+        android:layout_weight=".1"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/bus_pic"
+            android:layout_width="165dp"
+            android:layout_height="165dp"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="3dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".7"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bus No.12"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:id="@+id/busIdentity"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical|right"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textSize="20dp"
+            android:paddingEnd="25dp"
+            android:id="@+id/DriverInfo"
+            android:drawableRight="@drawable/ic_info_outline_black_24dp"
+            android:onClick="viewDriverDetails"
+            android:paddingRight="25dp" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".9"
+        >
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".7">
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:textAlignment="center"
-                android:text="Driver Information"
-                android:textSize="25sp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/DriverInfo"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="2"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Number"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textsec"
+                        android:paddingBottom="20dp"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="MFG"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textsec"
+                        android:paddingBottom="20dp"
+
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Model"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textsec"
+                        android:paddingBottom="20dp"
+
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Capacity"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textsec"
+                        android:paddingBottom="20dp"
+
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".7"
+                    android:orientation="vertical"
+
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="50-151515"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textsec"
+                        android:paddingBottom="20dp"
+                        android:id="@+id/busNumberer"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ford"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textsec"
+                        android:id="@+id/mfg"
+                        android:paddingBottom="20dp"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2016"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textsec"
+                        android:paddingBottom="20dp"
+                        android:id="@+id/busModel"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="24"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textsec"
+                        android:paddingBottom="20dp"
+                        android:id="@+id/buscapacity"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
 
 
         </RelativeLayout>
 
-    <RelativeLayout
+    </ScrollView>
+
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight=".3">
-        <View
-            android:layout_height="5dp"
-            android:layout_width="match_parent"
-            android:background="#c99f9f"
-            android:id="@+id/Vii"
-
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Vii"
-            android:id="@+id/Vi"
-            android:layout_centerHorizontal="true"
-            android:text="Location : "
-            android:textSize="20sp"
-
-            />
-    <ListView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:id="@+id/driver"
-        android:textAlignment="center"
-        android:background="#9993c8f5"
-        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/track_bt"
+        android:fontFamily="sans-serif-condensed"
+        android:padding="10dp"
+        android:text="Find Bus Location"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:ignore="ObsoleteLayoutParam"
+        android:textAllCaps="false"
+        android:id="@+id/find_bus_location"
+        android:onClick="findBusLocation"
 
-        android:layout_below="@+id/Vi"
-
-        >
-    </ListView>
-    </RelativeLayout>
-
-    </LinearLayout>
+        />
 
 
-</RelativeLayout>
+</LinearLayout>

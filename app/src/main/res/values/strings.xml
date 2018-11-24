@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BTS</string>
-
+    <string name="open">Open</string>
+    <string name="close">Close</string>
     <string name="new_message_notification_title_template">New message: %1$s</string>
 
     <!-- TODO: remove this placeholder text -->
@@ -10,4 +11,14 @@
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="about">Bus Tracking System is an Application developed by BTS team as graduation Project that aims to track school buses by
+        children parents to keep an eye on the bus location whenever is moving plus they get a notification when the bus is closed to their
+        place Also, they could view details about the bus driver such as his image, name, age, nationality and the bus like, its number, model, capacity
+        to ease their mind and worry less about their children during their ride between home and school. \n
+        We didn\'t forget about the bus drivers who face problem to contact with kids parent and find where exactly the new children place the
+        application make it easier to contact with the parent when there a need to Also,
+        speed the process of locating the kids\' places whenever they need.
+
+    </string>
 </resources>
