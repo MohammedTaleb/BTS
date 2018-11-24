@@ -1,15 +1,23 @@
 package com.example.ma.bts;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,27 +31,46 @@ public class Access extends AppCompatActivity {
 	EditText access;
 	FirebaseDatabase Firedatabase;
 	DatabaseReference myRef;
-	SharedPreferences pref ;
+	SharedPreferences pref;
 	String keyAccess;
-	Data d;
-	ProgressBar pb;
+
+	RelativeLayout rellay1, rellay2;
+	Dialog myDialog;
+
+
+	Handler handler 	= new Handler();
+	Runnable runnable 	= new Runnable() {
+		@Override
+		public void run() {
+			rellay1.setVisibility(View.VISIBLE);
+			rellay2.setVisibility(View.VISIBLE);
+
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_access);
+		setContentView(R.layout.access);
 
-		pref=this.getSharedPreferences("com.example.ma.bts", Context.MODE_PRIVATE);
-		pb= (ProgressBar) findViewById(R.id.pb);
-		login= (Button) findViewById(R.id.login);
-		access= (EditText) findViewById(R.id.access);
+		rellay1 = (RelativeLayout) findViewById(R.id.rellay1);
+		rellay2 = (RelativeLayout) findViewById(R.id.rellay2);
 
+		handler.postDelayed(runnable, 2000); //2000 is the timeout for the splash
+		myDialog = new Dialog(this);
+
+		myDialog = new Dialog(this);
+		pref = this.getSharedPreferences("com.example.ma.bts", Context.MODE_PRIVATE);
+
+		//login= (Button) findViewById(R.id.login);
+		access = (EditText) findViewById(R.id.access);
 
 
 	}
-	public void getAccess(View v){
-		keyAccess=access.getText().toString();
-		pb.setVisibility(View.VISIBLE);
-		userChecking ();
+
+	public void getAccess(View v) {
+		keyAccess = access.getText().toString();
+		userChecking();
 
 	}
 
@@ -62,15 +89,16 @@ public class Access extends AppCompatActivity {
 
 					Log.i("passwordDoc", "Yes");
 					String name = dataSnapshot.child("Driver").child(keyAccess).child("name").getValue().toString();
-
+					String busId = dataSnapshot.child("Driver").child(keyAccess).child("busId").getValue().toString();
 					pref.edit().putString("name", name).apply();
 					pref.edit().putString("type", "Driver").apply();
-
-					Intent intent = new Intent(Access.this, Access.class);
+					Intent intent = new Intent(Access.this, BusDriver.class);
+					Log.i("busNum", busId + "");
+					intent.putExtra("busNumber", busId);
+					intent.putExtra("driverkey",keyAccess);
 					startActivity(intent);
-					finish();
+					Log.i("back", "back");
 					Toast.makeText(Access.this, "Welcome Mr." + name, Toast.LENGTH_LONG).show();
-					pb.setVisibility(View.INVISIBLE);
 				} else {
 
 					if ((!(keyAccess.isEmpty())) && dataSnapshot.child("Parent").child(keyAccess).exists()) {
@@ -85,22 +113,18 @@ public class Access extends AppCompatActivity {
 
 						pref.edit().putString("type", "parent").apply();
 
-						d=new Data();
-						//d.fillChild(keyAccess);
-//						if (!(Data.child.isEmpty()))Data.child.clear();
-//						if (!(Data.id.isEmpty()))Data.id.clear();
-//						if (!(Data.name.isEmpty()))Data.name.clear();
-						Intent intent1 = new Intent(Access.this, ChildBusId.class);
+						Data data = new Data();
+						data.fillChild(keyAccess);
+
+						Intent intent1 = new Intent(Access.this, Parent.class);
 						startActivity(intent1);
 						finish();
 						Toast.makeText(Access.this, "Welcome Mr." + name, Toast.LENGTH_LONG).show();
-						pb.setVisibility(View.INVISIBLE);
 						return;
 					} else {
 						Log.i("NotFoundUser", "no");
 						Toast.makeText(Access.this, "Please contact the school to get/check your Access Key"
 								, Toast.LENGTH_LONG).show();
-						pb.setVisibility(View.INVISIBLE);
 					}
 
 				}
@@ -115,4 +139,40 @@ public class Access extends AppCompatActivity {
 		});
 	}
 
+	public void ShowPopup(View view) {
+
+		TextView txtclose;
+		Button btnFollow;
+		myDialog.setContentView(R.layout.popup);
+		txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+		txtclose.setText("X");
+		txtclose.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				myDialog.dismiss();
+			}
+		});
+		myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		myDialog.show();
+
+	}
+
+	public void call(View view) {
+		Toast.makeText(this,"call",Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "123456789"));
+		startActivity(intent);
+	}
+
+	public void send_email(View view) {
+		Intent i = new Intent(Intent.ACTION_SEND);
+		i.setType("message/rfc822");
+		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"bus@tracking.com"});
+		i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+		i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+		try {
+			startActivity(Intent.createChooser(i, "Send mail..."));
+		} catch (android.content.ActivityNotFoundException ex) {
+			Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+		}
+	}
 }

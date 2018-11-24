@@ -17,9 +17,9 @@ import java.util.ArrayList;
 
 public class Data {
 
-	static ArrayList<String> child=new ArrayList<>();
-	static ArrayList<String> id=new ArrayList<>();
-	static ArrayList<String> name=new ArrayList<>();
+	static ArrayList<String> child;
+	static ArrayList<String> id;
+	static ArrayList<String> name;
 	static ArrayList<String> businfo=new ArrayList<>();
 	FirebaseDatabase Firedatabase;
 	DatabaseReference myRef;
@@ -32,16 +32,19 @@ public class Data {
 		child=new ArrayList<>();
 		id=new ArrayList<>();
 		name=new ArrayList<>();
+		if (!(child.equals(null))) child.clear();
+		if (!(id.equals(null))) id.clear();
+		if (!(name.equals(null))) name.clear();
 		if (!(Data.child.isEmpty()))Data.child.clear();
 		if (!(Data.id.isEmpty()))Data.id.clear();
 		if (!(Data.name.isEmpty()))Data.name.clear();
 
-		final String [] names={"Child Name : ","    ID     : "};
+		final String [] names={"","    Bus ID     : "};
 
 
 		Firedatabase = FirebaseDatabase.getInstance();
 		myRef = Firedatabase.getReference();
-		myRef.addValueEventListener(new ValueEventListener() {
+		myRef.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
 				if (dataSnapshot.child("Parent").child(key).child("ID").exists()) {
@@ -83,15 +86,15 @@ public class Data {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
 
-					for(DataSnapshot snap: dataSnapshot.child("Bus").child(bid).getChildren()){
-						if (snap.getKey().equals("latt")){
-							continue;}
-						else if(snap.getKey().equals("long")){
-							continue;}
-						else
+				for(DataSnapshot snap: dataSnapshot.child("Bus").child(bid).getChildren()){
+					if (snap.getKey().equals("latt")){
+						continue;}
+					else if(snap.getKey().equals("long")){
+						continue;}
+					else
 						businfo.add(snap.getKey()+"     :   "+snap.getValue());
 
-					}
+				}
 
 
 
