@@ -60,9 +60,14 @@ public class TrackDriverInfo extends AppCompatActivity {
 
 		id = String.valueOf((pref.getInt("index", 0)));
         myDialog= new Dialog(this);
-
+//		Intent svb=new Intent(this, ServiceNotification.class);
+//		svb.putExtra("id",id);
+//		startService(svb);
+//		sv.onStart(svb,0);
+		//startService(new Intent(this, ServiceNotification.class));
 
 		d=new Data();
+		//location= (TextView) findViewById(R.id.Vi);
         bNum= (TextView) findViewById(R.id.busNumberer);
         Bcapacity= (TextView) findViewById(R.id.buscapacity);
         bModel= (TextView) findViewById(R.id.busModel);
@@ -73,7 +78,6 @@ public class TrackDriverInfo extends AppCompatActivity {
         bIdentity.setText("Bus No."+id);
         bImage = (ImageView) findViewById(R.id.bus_pic);
 
-
         Firedatabase = FirebaseDatabase.getInstance();
         Log.i("busId",id);
         busRef = Firedatabase.getReference().child("Bus").child(id+"");
@@ -82,6 +86,7 @@ public class TrackDriverInfo extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 BusInfo busInfo = dataSnapshot.getValue(BusInfo.class);
                 bNum.setText(busInfo.busNumber);
+                Log.i("busNumber",busInfo.busNumber+" ");
                 Bcapacity.setText(busInfo.capacity);
                 bModel.setText(busInfo.busModel);
                 BMFG.setText(busInfo.manufacturerCompany);
@@ -90,6 +95,7 @@ public class TrackDriverInfo extends AppCompatActivity {
                         .into(bImage);
                 DriverId = busInfo.busDriverId;
                 getDriverInfo(DriverId,"Id");
+	            busLocation();
             }
 
             @Override
@@ -98,14 +104,15 @@ public class TrackDriverInfo extends AppCompatActivity {
             }
         });
 
-		busLocation();
+
+
 		//sv.busLocation(id);
 		//NewMessageNotification newMessageNotification = new NewMessageNotification();
 		//newMessageNotification.notify(this,"Hola",1);
 	}
 
     private void getDriverInfo(String driverId , final String key) {
-        Log.i("driverId",driverId+"hola");
+        Log.i("driverId",driverId+"");
         driverRef = Firedatabase.getReference().child("Driver").child(DriverId);
         driverRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -140,24 +147,27 @@ public class TrackDriverInfo extends AppCompatActivity {
 
 
     public void busLocation(){
-			Log.i("busLocation","In");
+	    Log.i("dim","test ");
+
 		myRef = Firedatabase.getReference();
 		myRef.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
 				try {
 					for(DataSnapshot snap: dataSnapshot.child("Bus").child(id+"").getChildren()){
-                        Log.i("keysnap",snap.getKey());
+						Log.i("dim",snap.getKey());
 						if (snap.getKey().equals("latt")){
 							latt=snap.getValue().toString();
+							Log.i("dim","test1 ");
+
 						}
 						else if (snap.getKey().equals("long")){
-                            Log.i("keysnapatlong",snap.getKey());
-
-                            lng=snap.getValue().toString();
+							lng=snap.getValue().toString();
 							locate=latt+","+lng;
-
+							//location.setText("Location : "+latt+","+lng);
+							Log.i("dim","test2 ");
 							busLocation(id);
+
 						}
 
 					}
@@ -186,7 +196,7 @@ public class TrackDriverInfo extends AppCompatActivity {
 	//----------------------------------------------------------------
 
 	public void busLocation(final String index){
-		Log.i("busLocation","In2");
+		Log.i("dim","test3 ");
 
 		Firedatabase = FirebaseDatabase.getInstance();
 		final String[] latt = new String[1];

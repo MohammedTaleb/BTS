@@ -121,7 +121,7 @@ public class Access extends AppCompatActivity {
 						pref.edit().putString("type", "parent").apply();
 
 						Data data = new Data();
-						data.fillChild(keyAccess);
+						//data.fillChild(keyAccess);
 
 						pref.edit().putInt("Parentkey",1).apply();
 

@@ -28,17 +28,17 @@ public class Data {
 
 
 	public ArrayList<String> fillChild(final String key){
-
+//		Log.i("child1",child.size()+"");
 		child=new ArrayList<>();
 		id=new ArrayList<>();
 		name=new ArrayList<>();
 		if (!(child.equals(null))) child.clear();
 		if (!(id.equals(null))) id.clear();
 		if (!(name.equals(null))) name.clear();
-		if (!(Data.child.isEmpty()))Data.child.clear();
-		if (!(Data.id.isEmpty()))Data.id.clear();
-		if (!(Data.name.isEmpty()))Data.name.clear();
-
+		if (!(Data.child.isEmpty()))Data.child.removeAll(child);
+		if (!(Data.id.isEmpty()))Data.id.removeAll(id);
+		if (!(Data.name.isEmpty()))Data.name.removeAll(name);
+		Log.i("child2",child.size()+"");
 		final String [] names={"","    Bus ID     : "};
 
 
