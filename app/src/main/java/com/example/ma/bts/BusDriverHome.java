@@ -2,6 +2,7 @@ package com.example.ma.bts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -25,8 +27,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 /**
- * Created by Belal on 18/09/16.
+ * Created by BTS on 18/09/16.
  */
 
 
@@ -34,7 +38,9 @@ public class BusDriverHome extends Fragment {
 
     private RecyclerView recyclerView;
     private DatabaseReference myref;
+    Button stratTracking;
     Context context;
+
 
     @Nullable
     @Override
@@ -79,9 +85,12 @@ public class BusDriverHome extends Fragment {
 
     }
 
+
+
+
     public static class ChildViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView Name,Grade,ParentIDe;
-        ImageButton callParent,parentLocation;
+        ImageButton callParent,parentLocation,startLocation;
         de.hdodenhof.circleimageview.CircleImageView childPic;
         View mView;
         FirebaseDatabase Firedatabase;
@@ -102,6 +111,7 @@ public class BusDriverHome extends Fragment {
             callParent.setOnClickListener(this);
             parentLocation = itemView.findViewById(R.id.locationparent);
             parentLocation.setOnClickListener(this);
+
 
             context = itemView.getContext();;
 
@@ -172,6 +182,7 @@ public class BusDriverHome extends Fragment {
                     Intent intent2 = new Intent(android.content.Intent.ACTION_VIEW, uri );
                     context.startActivity( intent2 );
                     break;
+
 
             }
         }

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by macbookpro on 11/24/18.
+ * Created by BTS on 11/24/18.
  */
 
 public class About extends Fragment {
@@ -18,4 +18,6 @@ public class About extends Fragment {
         return inflater.inflate(R.layout.about,container,false);
 
     }
+
+
 }

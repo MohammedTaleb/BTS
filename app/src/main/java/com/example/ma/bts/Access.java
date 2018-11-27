@@ -64,6 +64,16 @@ public class Access extends AppCompatActivity {
 
 		//login= (Button) findViewById(R.id.login);
 		access = (EditText) findViewById(R.id.access);
+		if(pref.getInt("Parentkey",0)==1){
+			Intent intent1 = new Intent(Access.this, Parent.class);
+			startActivity(intent1);
+			finish();
+		}
+		Log.i("DriverKey",pref.getInt("Driverkey",0)+"");
+		if(pref.getInt("Driverkey",0) == 1){
+            Intent intent = new Intent(Access.this, BusDriver.class);
+            startActivity(intent);
+        }
 
 
 	}
@@ -83,19 +93,16 @@ public class Access extends AppCompatActivity {
 			public void onDataChange(DataSnapshot dataSnapshot) {
 
 				if ((!(keyAccess.isEmpty())) && dataSnapshot.child("Driver").child(keyAccess).exists()) {
-					Log.i("FoundUserDriver", "Yes");
 					pref.edit().putString("key", keyAccess).apply();
 					pref.edit().putInt("acc", 1).apply();
-
-					Log.i("passwordDoc", "Yes");
 					String name = dataSnapshot.child("Driver").child(keyAccess).child("name").getValue().toString();
 					String busId = dataSnapshot.child("Driver").child(keyAccess).child("busId").getValue().toString();
 					pref.edit().putString("name", name).apply();
 					pref.edit().putString("type", "Driver").apply();
 					Intent intent = new Intent(Access.this, BusDriver.class);
-					Log.i("busNum", busId + "");
-					intent.putExtra("busNumber", busId);
-					intent.putExtra("driverkey",keyAccess);
+					pref.edit().putInt("Driverkey",1).apply();
+					pref.edit().putString("busNumber",busId).apply();
+					pref.edit().putString("driverkey",keyAccess).apply();
 					startActivity(intent);
 					Log.i("back", "back");
 					Toast.makeText(Access.this, "Welcome Mr." + name, Toast.LENGTH_LONG).show();
@@ -115,6 +122,8 @@ public class Access extends AppCompatActivity {
 
 						Data data = new Data();
 						data.fillChild(keyAccess);
+
+						pref.edit().putInt("Parentkey",1).apply();
 
 						Intent intent1 = new Intent(Access.this, Parent.class);
 						startActivity(intent1);
@@ -175,4 +184,12 @@ public class Access extends AppCompatActivity {
 			Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
 		}
 	}
+
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+    }
 }

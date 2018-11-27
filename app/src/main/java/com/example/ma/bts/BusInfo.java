@@ -1,7 +1,7 @@
 package com.example.ma.bts;
 
 /**
- * Created by macbookpro on 11/24/18.
+ * Created by BTS on 11/24/18.
  */
 
 public class BusInfo {

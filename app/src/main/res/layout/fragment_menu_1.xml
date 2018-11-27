@@ -43,18 +43,4 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/track_bt"
-        android:fontFamily="sans-serif-condensed"
-        android:padding="10dp"
-        android:text="Start Tracking"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
 </RelativeLayout>

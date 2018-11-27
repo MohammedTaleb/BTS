@@ -1,7 +1,7 @@
 package com.example.ma.bts;
 
 /**
- * Created by macbookpro on 10/29/18.
+ * Created by BTS on 10/29/18.
  */
 
 public class Child {

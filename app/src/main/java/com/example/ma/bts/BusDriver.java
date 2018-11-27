@@ -1,7 +1,9 @@
 package com.example.ma.bts;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
@@ -15,29 +17,33 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Created by macbookpro on 10/13/18.
+ * Created by BTS on 10/13/18.
  */
 
 public class BusDriver extends AppCompatActivity {
     TextView BusId;
     String BusNum,DriverKey;
+    SharedPreferences pref;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_driver);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        bundle.get("busNumber");
-        DriverKey = (String)bundle.get("driverkey");
-        BusNum = (String) bundle.get("busNumber");
+        pref=this.getSharedPreferences("com.example.ma.bts", Context.MODE_PRIVATE);
+      //  Intent intent = getIntent();
+        //Bundle bundle = intent.getExtras();
+       // bundle.get("busNumber");
+        DriverKey = pref.getString("driverkey","0");
+        BusNum = pref.getString("busNumber","0");
+        Log.i("drbn",DriverKey+BusNum);
        // BusId = (TextView) findViewById(R.id.BusNumber);
        // BusId.setText("Bus number " + BusNum);
         CheckUserPermsions();
@@ -90,7 +96,14 @@ public class BusDriver extends AppCompatActivity {
                             fragment = new BusDriverProfile(DriverKey);
                         break;
                     case R.id.bus_info:
-                            fragment = new BusInfoActivity();
+                            fragment = new BusInfoActivity(BusNum);
+                        break;
+                    case R.id.about:
+                            fragment = new About();
+                        break;
+                    case R.id.logout:
+                        logout();
+                        break;
                 }
 
                 if (fragment != null) {
@@ -114,6 +127,13 @@ public class BusDriver extends AppCompatActivity {
 
     }
 
+    private void logout() {
+        pref.edit().putInt("Driverkey",0).apply();
+        Intent intent = new Intent(BusDriver.this,Access.class);
+        startActivity(intent);
+        finish();
+    }
+
     void getLocation() {
 //        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 //
@@ -125,6 +145,7 @@ public class BusDriver extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,1,locationTracking);
 
     }
+
 
     //access to permsions
     void CheckUserPermsions(){
@@ -161,6 +182,12 @@ public class BusDriver extends AppCompatActivity {
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+       finish();
+
     }
 
 

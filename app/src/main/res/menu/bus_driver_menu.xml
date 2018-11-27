@@ -12,10 +12,6 @@
         android:title="Bus Info"
         android:icon="@drawable/ic_directions_bus_black_24dp"/>
 
-    <item android:title="Notifcation"
-        android:icon="@drawable/ic_notifications_none_black_24dp"
-        android:id="@+id/notification"/>
-
     <item android:title="About"
         android:id="@+id/about"
         android:icon="@drawable/ic_info_outline_black_24dp"/>

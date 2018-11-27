@@ -14,10 +14,9 @@
         android:orientation="vertical"
         >
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/studentPic"
+        android:id="@+id/driver_tPic"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/driver_one"
         app:civ_border_color="@color/white"
         app:civ_border_width="2dp"
         android:layout_gravity="center"
@@ -27,13 +26,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ahamd Osama"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
         android:layout_marginTop="10dp"
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_marginBottom="5dp"
+        android:id="@+id/driverName"
 
         />
 
@@ -64,7 +63,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="125"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:paddingTop="10dp"
@@ -88,7 +86,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Jordanian"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:paddingTop="10dp"
@@ -112,7 +109,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="36"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:paddingTop="10dp"
@@ -147,7 +143,6 @@
             android:layout_height="44dp"
             android:layout_marginLeft="14dp"
             android:layout_marginStart="14dp"
-            android:text="962 79880 8000"
             android:textColor="@color/textsec"
             android:textSize="19sp"
             android:layout_alignBottom="@+id/phone"
@@ -172,7 +167,6 @@
             android:id="@+id/dp_email"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
-            android:text="ahmadosama@bts.com"
             android:textColor="@color/textsec"
             android:textSize="19sp"
             android:gravity="center"
@@ -194,7 +188,6 @@
             android:id="@+id/dp_location"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
-            android:text="Amman-jordan university"
             android:textColor="@color/textsec"
             android:textSize="19sp"
             android:gravity="center"
