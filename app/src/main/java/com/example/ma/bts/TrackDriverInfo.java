@@ -41,11 +41,11 @@ public class TrackDriverInfo extends AppCompatActivity {
 	SharedPreferences pref ;
 	TextView location,bNum,Bcapacity,bModel,BMFG,BDriver,bIdentity;
 	String lng,latt,locate;
-	String id,DriverId;
+	String id,DriverId,sTime,eTime;
 	ListView lv;
 	Data d;
     ImageView bImage,driverPic;
-	int min10=0,min5=0,arr=0;
+	int min10=0,min5=0,arr=0,key=0,akey=0;
     Dialog myDialog;
     TextView BusId,dp_nationality,dp_age,dp_phone,dp_email,dp_location,dp_name;
 
@@ -65,6 +65,8 @@ public class TrackDriverInfo extends AppCompatActivity {
 //		startService(svb);
 //		sv.onStart(svb,0);
 		//startService(new Intent(this, ServiceNotification.class));
+
+
 
 		d=new Data();
 		//location= (TextView) findViewById(R.id.Vi);
@@ -156,6 +158,11 @@ public class TrackDriverInfo extends AppCompatActivity {
 				try {
 					for(DataSnapshot snap: dataSnapshot.child("Bus").child(id+"").getChildren()){
 						Log.i("dim",snap.getKey());
+						if (snap.getKey().equals("Key"))
+							key=Integer.parseInt(snap.getValue().toString());
+						if (key==1){
+							sTime= (String) dataSnapshot.child("busIdKey").child(id+"").child("startTime").getValue();
+						}
 						if (snap.getKey().equals("latt")){
 							latt=snap.getValue().toString();
 							Log.i("dim","test1 ");
@@ -247,7 +254,13 @@ public class TrackDriverInfo extends AppCompatActivity {
 		int speedIs400MetersPerMinute = 200;
 		float estimatedDriveTimeInMinutes = distanceInMeters / speedIs400MetersPerMinute;
 		Log.i("edtim",estimatedDriveTimeInMinutes +" ");
-
+		if (akey==0) {
+			if (key == 1) {
+				addNotification(" Start round "+sTime, locate);
+				akey=1;
+				Log.i("onest", estimatedDriveTimeInMinutes + " ");
+			}
+		}
 		if (estimatedDriveTimeInMinutes<10.0&&estimatedDriveTimeInMinutes>5.0){
 			if (min10==0) {
 				addNotification(" 10Min ",locate);

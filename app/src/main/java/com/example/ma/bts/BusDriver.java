@@ -23,6 +23,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
+
 /**
  * Created by BTS on 10/13/18.
  */
@@ -126,12 +131,22 @@ public class BusDriver extends AppCompatActivity {
 
 
     }
-
+	FirebaseDatabase Firedatabase;
+	DatabaseReference myRef;
     private void logout() {
-        pref.edit().putInt("Driverkey",0).apply();
+	    Firedatabase = FirebaseDatabase.getInstance();
+	    myRef = Firedatabase.getReference();
+	    myRef.child("Bus").child(BusNum).child("Key").setValue("0");
+
+	    pref.edit().putInt("Driverkey",0).apply();
+        pref.edit().putString("busNumber","0").apply();
+
+        String time= String.valueOf(Calendar.getInstance().getTime());
+        myRef.child("busIdKey").child(BusNum).child("endTime").setValue(time);
+        myRef.child("busIdKey").child(BusNum).child("Key").setValue("0");
         Intent intent = new Intent(BusDriver.this,Access.class);
         startActivity(intent);
-        finish();
+        finishActivity(1);
     }
 
     void getLocation() {

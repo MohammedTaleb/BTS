@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 public class Access extends AppCompatActivity {
 	Button login;
 	EditText access;
@@ -102,7 +104,13 @@ public class Access extends AppCompatActivity {
 					Intent intent = new Intent(Access.this, BusDriver.class);
 					pref.edit().putInt("Driverkey",1).apply();
 					pref.edit().putString("busNumber",busId).apply();
+
+					String time= String.valueOf(Calendar.getInstance().getTime());
+					myRef.child("busIdKey").child(busId).child("startTime").setValue(time);
 					pref.edit().putString("driverkey",keyAccess).apply();
+					myRef.child("Bus").child(busId).child("Key").setValue("1");
+					myRef.child("busIdKey").child(busId).child("Key").setValue("1");
+
 					startActivity(intent);
 					Log.i("back", "back");
 					Toast.makeText(Access.this, "Welcome Mr." + name, Toast.LENGTH_LONG).show();
