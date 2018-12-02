@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +36,7 @@ public class Access extends AppCompatActivity {
 	DatabaseReference myRef;
 	SharedPreferences pref;
 	String keyAccess;
-
+	ProgressBar pb;
 	RelativeLayout rellay1, rellay2;
 	Dialog myDialog;
 
@@ -54,6 +55,8 @@ public class Access extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.access);
+
+		pb= (ProgressBar) findViewById(R.id.pb);
 
 		rellay1 = (RelativeLayout) findViewById(R.id.rellay1);
 		rellay2 = (RelativeLayout) findViewById(R.id.rellay2);
@@ -82,7 +85,9 @@ public class Access extends AppCompatActivity {
 
 	public void getAccess(View v) {
 		keyAccess = access.getText().toString();
+		pb.setVisibility(View.VISIBLE);
 		userChecking();
+
 
 	}
 
@@ -114,6 +119,7 @@ public class Access extends AppCompatActivity {
 					startActivity(intent);
 					Log.i("back", "back");
 					Toast.makeText(Access.this, "Welcome Mr." + name, Toast.LENGTH_LONG).show();
+					pb.setVisibility(View.INVISIBLE);
 				} else {
 
 					if ((!(keyAccess.isEmpty())) && dataSnapshot.child("Parent").child(keyAccess).exists()) {
@@ -137,11 +143,13 @@ public class Access extends AppCompatActivity {
 						startActivity(intent1);
 						finish();
 						Toast.makeText(Access.this, "Welcome Mr." + name, Toast.LENGTH_LONG).show();
+						pb.setVisibility(View.INVISIBLE);
 						return;
 					} else {
 						Log.i("NotFoundUser", "no");
 						Toast.makeText(Access.this, "Please contact the school to get/check your Access Key"
 								, Toast.LENGTH_LONG).show();
+						pb.setVisibility(View.INVISIBLE);
 					}
 
 				}

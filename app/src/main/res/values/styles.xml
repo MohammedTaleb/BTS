@@ -17,6 +17,9 @@
 
 
     </style>
+    <style name="Progressbar.White" parent="AppTheme">
+        <item name="colorControlActivated">@color/white</item>
+    </style>
 
 
 
