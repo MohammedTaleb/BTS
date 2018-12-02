@@ -49,7 +49,13 @@ public class BusDriver extends AppCompatActivity {
         DriverKey = pref.getString("driverkey","0");
         BusNum = pref.getString("busNumber","0");
         Log.i("drbn",DriverKey+BusNum);
-       // BusId = (TextView) findViewById(R.id.BusNumber);
+
+
+        locationTracking = new LocationTracking(this,BusNum);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+
+        // BusId = (TextView) findViewById(R.id.BusNumber);
        // BusId.setText("Bus number " + BusNum);
         CheckUserPermsions();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -137,7 +143,6 @@ public class BusDriver extends AppCompatActivity {
 	    Firedatabase = FirebaseDatabase.getInstance();
 	    myRef = Firedatabase.getReference();
 	    myRef.child("Bus").child(BusNum).child("Key").setValue("0");
-
 	    pref.edit().putInt("Driverkey",0).apply();
         pref.edit().putString("busNumber","0").apply();
 
@@ -145,22 +150,33 @@ public class BusDriver extends AppCompatActivity {
         myRef.child("busIdKey").child(BusNum).child("endTime").setValue(time);
         myRef.child("busIdKey").child(BusNum).child("Key").setValue("0");
         Intent intent = new Intent(BusDriver.this,Access.class);
+        onPause();
         startActivity(intent);
-        finishActivity(1);
+        finish();
     }
-
+    LocationTracking locationTracking;
+    LocationManager locationManager;
     void getLocation() {
 //        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 //
 //        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 //        Toast.makeText(this,"long="+location.getLongitude()+" lat= "+location.getLatitude(),Toast.LENGTH_LONG).show();
 
-        LocationTracking locationTracking = new LocationTracking(this,BusNum);
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+     //   locationTracking = new LocationTracking(this,BusNum);
+      //   locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,1,locationTracking);
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("onPause","Hola");
+
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager.removeUpdates(locationTracking);
+    }
 
     //access to permsions
     void CheckUserPermsions(){

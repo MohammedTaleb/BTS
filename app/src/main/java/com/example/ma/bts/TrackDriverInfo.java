@@ -45,7 +45,7 @@ public class TrackDriverInfo extends AppCompatActivity {
 	ListView lv;
 	Data d;
     ImageView bImage,driverPic;
-	int min10=0,min5=0,arr=0,key=0,akey=0;
+	int min10=0,min5=0,arr=0,key=0,akey=0,bkey=0;
     Dialog myDialog;
     TextView BusId,dp_nationality,dp_age,dp_phone,dp_email,dp_location,dp_name;
 
@@ -163,6 +163,11 @@ public class TrackDriverInfo extends AppCompatActivity {
 						if (key==1){
 							sTime= (String) dataSnapshot.child("busIdKey").child(id+"").child("startTime").getValue();
 						}
+
+						if (key==0){
+							eTime= (String) dataSnapshot.child("busIdKey").child(id+"").child("endTime").getValue();
+						}
+
 						if (snap.getKey().equals("latt")){
 							latt=snap.getValue().toString();
 							Log.i("dim","test1 ");
@@ -258,6 +263,13 @@ public class TrackDriverInfo extends AppCompatActivity {
 			if (key == 1) {
 				addNotification(" Start round "+sTime, locate);
 				akey=1;
+				Log.i("onest", estimatedDriveTimeInMinutes + " ");
+			}
+		}
+		if (bkey==0) {
+			if (key == 0) {
+				addNotification(" arriving school "+eTime, locate);
+				bkey=1;
 				Log.i("onest", estimatedDriveTimeInMinutes + " ");
 			}
 		}

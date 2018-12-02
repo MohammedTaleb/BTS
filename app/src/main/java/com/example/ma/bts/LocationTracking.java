@@ -50,6 +50,7 @@ public class LocationTracking implements LocationListener {
     }
 
     void driverLocationUpdater1(double lan,double lat){
+	    Log.i("onUpdate",BusNum);
         fDatabaseRef.child("Bus").child(BusNum).child("latt").setValue(lat);
         fDatabaseRef.child("Bus").child(BusNum).child("long").setValue(lan);
 
