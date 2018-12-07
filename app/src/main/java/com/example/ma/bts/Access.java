@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 public class Access extends AppCompatActivity {
-	Button login;
+
 	EditText access;
 	FirebaseDatabase Firedatabase;
 	DatabaseReference myRef;

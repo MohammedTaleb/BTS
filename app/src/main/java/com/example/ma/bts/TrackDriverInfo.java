@@ -289,7 +289,7 @@ public class TrackDriverInfo extends AppCompatActivity {
 		}
 		if (estimatedDriveTimeInMinutes < 1.0) {
 			if (arr == 0) {
-				addNotification("arrive! ", locate);
+				addNotification("arrive! counter started within 3 min  :) ", locate);
 				arr = 1;
 				Log.i("oneest", estimatedDriveTimeInMinutes + " ");
 			}
