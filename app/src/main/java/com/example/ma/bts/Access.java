@@ -184,7 +184,7 @@ public class Access extends AppCompatActivity {
 
 	public void call(View view) {
 		Toast.makeText(this,"call",Toast.LENGTH_SHORT).show();
-		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "123456789"));
+		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "0798981655"));
 		startActivity(intent);
 	}
 

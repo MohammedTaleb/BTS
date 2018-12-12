@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -37,12 +38,19 @@ import static android.content.Context.LOCATION_SERVICE;
 public class BusDriverHome extends Fragment {
 
     private RecyclerView recyclerView;
-    private DatabaseReference myref;
+    private Query myref;
     Button stratTracking;
     Context context;
+    String busNum;
+    public BusDriverHome() {
+    }
 
+    public BusDriverHome(String busNum) {
+        Log.i("contr",busNum+"cc");
+        this.busNum = busNum;
+    }
 
-    @Nullable
+	@Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //returning our layout file
@@ -61,7 +69,8 @@ public class BusDriverHome extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.studentsList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        myref= FirebaseDatabase.getInstance().getReference().child("Child");
+        Log.i("ref",busNum+"xx");
+        myref= FirebaseDatabase.getInstance().getReference().child("Child").orderByChild("busId").equalTo(busNum);
         FirebaseRecyclerAdapter<Child,ChildViewHolder> recyclerAdapter=new FirebaseRecyclerAdapter<Child,ChildViewHolder>(
                 Child.class,
                 R.layout.recycler_item,

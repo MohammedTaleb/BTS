@@ -99,7 +99,7 @@ public class BusDriver extends AppCompatActivity {
 //                Class fragmentClass;
                 switch(item.getItemId()) {
                     case R.id.home:
-                        fragment = new BusDriverHome();
+                        fragment = new BusDriverHome(BusNum);
                         Toast.makeText(BusDriver.this,"Home",Toast.LENGTH_SHORT).show();
 
                         break;
@@ -129,7 +129,7 @@ public class BusDriver extends AppCompatActivity {
                 return false;
             }
         });
-        BusDriverHome busDriverHome = new BusDriverHome();
+        BusDriverHome busDriverHome = new BusDriverHome(BusNum);
         android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContent,busDriverHome);
         ft.commit();
