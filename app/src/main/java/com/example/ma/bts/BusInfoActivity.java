@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
  * Created by BTS on 11/1/18.
  */
 
-class BusInfoActivity extends android.support.v4.app.Fragment {
+public  class BusInfoActivity extends android.support.v4.app.Fragment {
     String busNum;
     public BusInfoActivity(String busNum) {
         this.busNum = busNum;

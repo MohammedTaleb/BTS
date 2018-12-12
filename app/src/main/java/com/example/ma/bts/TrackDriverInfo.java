@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -291,6 +292,9 @@ public class TrackDriverInfo extends AppCompatActivity {
 			if (arr == 0) {
 				addNotification("arrive! counter started within 3 min  :) ", locate);
 				arr = 1;
+				final MediaPlayer mediaPlayer=MediaPlayer.create(this,R.raw.bs);
+				mediaPlayer.setVolume(100,100);
+				mediaPlayer.start();
 				Log.i("oneest", estimatedDriveTimeInMinutes + " ");
 			}
 		}
